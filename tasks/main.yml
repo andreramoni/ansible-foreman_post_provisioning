@@ -26,5 +26,5 @@
     name: puppet-agent
     state: present
 - name: Run Puppet Agent for the first time
-  command: /opt/puppetlabs/bin/puppet agent -t --server {{ puppet_server }}
+  command: /opt/puppetlabs/bin/puppet agent --onetime --server {{ puppet_server }}
 
