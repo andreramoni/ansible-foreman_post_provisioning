@@ -6,7 +6,7 @@
     regexp: '^wget'
 - name: Install Katello consumer
   yum: 
-    name: https://{{ foreman_server }}/pub/katello-ca-consumer-latest.noarch.rpm 
+    name: https://{{ katello_server }}/pub/katello-ca-consumer-latest.noarch.rpm 
     state: present
     validate_certs: no
 - name: Subscribe to Katello
@@ -19,11 +19,12 @@
     state: present
   with_items:
     - katello-host-tools
+    - katello-host-tools-tracer
     - katello-agent
 - name: install Pupet Agent
   package:
     name: puppet-agent
     state: present
 - name: Run Puppet Agent for the first time
-  command: /opt/puppetlabs/bin/puppet agent -t --server {{ foreman_server }}
+  command: /opt/puppetlabs/bin/puppet agent -t --server {{ puppet_server }}
 
