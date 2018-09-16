@@ -13,6 +13,8 @@
   command: subscription-manager register --org="{{ org }}" --activationkey="{{ activation_key }}" --force
 - name: Restore CentOS branding
   command: yum -y reinstall centos-release
+- name: Remove CentOS default repos
+  command: rm -f /etc/yum.repos.d/CentOS-*
 - name: Install Katello clients
   package: 
     name: "{{ item }}"
