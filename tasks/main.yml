@@ -11,15 +11,20 @@
     validate_certs: no
 - name: Subscribe to Katello
   command: subscription-manager register --org="{{ org }}" --activationkey="{{ activation_key }}" --force
-- name: Restore CentOS branding
-  command: yum -y reinstall centos-release
+- name: Restore CentOS branding 1
+  shell: yum -y install centos-release
+  args:
+    warn: false
+- name: Restore CentOS branding 2
+  shell: yum -y reinstall centos-release
+  args:
+    warn: false
 - name: Install Katello clients
   package: 
     name: "{{ item }}"
     state: present
   with_items:
     - katello-host-tools
-    - katello-host-tools-tracer
     - katello-agent
 - name: Remove CentOS default repos
   command: rm -f /etc/yum.repos.d/CentOS-*
@@ -29,4 +34,3 @@
     state: present
 - name: Run Puppet Agent for the first time
   command: /opt/puppetlabs/bin/puppet agent --onetime --server {{ puppet_server }}
-
